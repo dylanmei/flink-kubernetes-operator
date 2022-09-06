@@ -48,6 +48,9 @@ rbac:
   jobRoleBinding:
     create: true
     name: "flink-role-binding"
+  operatorPodSecurityPolicy:
+    create: false
+    resourceNames: ["flink-operator"]
 
 operatorPod:
   annotations: {}

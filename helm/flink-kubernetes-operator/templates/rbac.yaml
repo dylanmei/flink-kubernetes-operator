@@ -69,6 +69,18 @@ rules:
       - ingresses
     verbs:
       - "*"
+{{- if .Values.rbac.operatorPodSecurityPolicy.create }}
+  - apiGroups:
+      - policy
+    {{- with .Values.rbac.operatorPodSecurityPolicy.resourceNames }}
+    resourceNames:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    resources:
+      - podsecuritypolicies
+    verbs:
+      - use
+{{- end }}
 {{- end }}
 
 {{/*
