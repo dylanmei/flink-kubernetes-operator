@@ -26,7 +26,7 @@ metadata:
 spec:
   ports:
   - port: 443
-    targetPort: 9443
+    targetPort: webhook
   selector:
     app.kubernetes.io/name: {{ include "flink-operator.name" . }}
 ---

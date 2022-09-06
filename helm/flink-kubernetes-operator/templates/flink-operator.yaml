@@ -138,7 +138,7 @@ spec:
             - name: WEBHOOK_KEYSTORE_TYPE
               value: "pkcs12"
             - name: WEBHOOK_SERVER_PORT
-              value: "9443"
+              value: "{{ .Values.webhook.serverPort }}"
             - name: LOG_CONFIG
               value: -Dlog4j.configurationFile=/opt/flink/conf/log4j-operator.properties
             - name: JVM_ARGS
@@ -149,6 +149,13 @@ spec:
               value: /opt/flink/plugins
             - name: OPERATOR_NAMESPACE
               value: {{ .Release.Namespace }}
+          ports:
+            - containerPort: {{ .Values.webhook.serverPort }}
+              name: webhook
+              {{- if .Values.operatorPod.hostNetwork }}
+              hostPort: {{ .Values.webhook.serverPort }}
+              {{- end }}
+              protocol: TCP
           securityContext:
             {{- toYaml .Values.webhookSecurityContext | nindent 12 }}
           volumeMounts:
@@ -187,6 +194,7 @@ spec:
             - key: keystore.p12
               path: keystore.p12
         {{- end }}
+      hostNetwork: {{ .Values.operatorPod.hostNetwork }}
 ---
 {{- if .Values.defaultConfiguration.create }}
 apiVersion: v1

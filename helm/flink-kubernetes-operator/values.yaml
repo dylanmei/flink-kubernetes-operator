@@ -58,6 +58,7 @@ operatorPod:
   env:
   # - name: ""
   #   value: ""
+  hostNetwork: false
 
 operatorServiceAccount:
   create: true
@@ -107,6 +108,7 @@ webhook:
   # passwordSecretRef:
   #   name: jks-password-secret
   #   key: password-key
+  serverPort: 9443
 
 defaultConfiguration:
   create: true
